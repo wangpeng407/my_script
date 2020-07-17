@@ -69,7 +69,7 @@ def main():
 
     print("#"*50)
     ELP = equal_loan_payment(loan_amount=args.loan_amount, annual_interest_rate=args.annual_interest_rate, stage_num=args.stage_num)
-    print('等息本金贷款：')
+    print('等额本息贷款：')
     print('每月还款额：{:.2f}'.format(ELP))
     print('#总利息{:.2f}'.format(ELP*args.stage_num - args.loan_amount))
     print("#" * 50)
