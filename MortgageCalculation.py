@@ -56,6 +56,7 @@ def main():
     EPP = equal_principal_payment(loan_amount=args.loan_amount, annual_interest_rate=args.annual_interest_rate, stage_num=args.stage_num)
     print("#" * 50)
     print("贷款额：{} ； 年化利率：{}；还款期数：{}".format(args.loan_amount, args.annual_interest_rate, args.stage_num))
+    print("#" * 50)
     print('等额本金贷款：')
 
     each_M = args.loan_amount/args.stage_num
