@@ -6,7 +6,7 @@ python MortgageCalculation.py -h
 usage: MortgageCalculation.py [-h] -l LOAN_AMOUNT -i ANNUAL_INTEREST_RATE -s
                               STAGE_NUM
 
-计算房贷利率算法，等额本金/等息本金
+计算房贷利率算法，等额本金/等额本息
 
 optional arguments:
   -h, --help            show this help message and exit
