@@ -77,7 +77,7 @@ def main():
     print("\033[1;35;31m#" * 50 + "\033[0m")
     print('等额本金贷款：')
     for i in range(0, args.stage_num):
-        print('第{}期，本金：{:.2f}, 利息：{:.2f}'.format(i+1, EPP[i], (EPP[i] - each_M)))
+        print('第{}期，本金：{:.2f}, 利息：{:.2f}'.format(i+1, each_M, (EPP[i] - each_M)))
     print('#总利息{:.2f}'.format(total_inter))
     print("\033[1;35;31m#"*50 + "\033[0m")
 
