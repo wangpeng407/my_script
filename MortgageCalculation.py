@@ -8,7 +8,7 @@ import argparse
 #等额本金/等额本息
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="计算房贷利率算法，等额本金/等息本金")
+    parser = argparse.ArgumentParser(description="计算房贷利率算法，等额本金/等额本息")
     parser.add_argument("-l", "--loan_amount", type=int, required=True, help="输入贷款总额，如120000")
     parser.add_argument("-i", "--annual_interest_rate", type=float, required=True, help="输入年化利率，如0.06")
     parser.add_argument("-s", "--stage_num", type=int, required=True,help="输入贷款期数")
@@ -40,6 +40,7 @@ def equal_loan_payment(loan_amount, annual_interest_rate, stage_num):
     #a12 = a11 * (1+0.5%) - A = 0
     #求A即可
     '''
+    #
     A = symbols('A')
     IR_perM = annual_interest_rate / 12.0
     #a0 = loan_amount
@@ -47,32 +48,47 @@ def equal_loan_payment(loan_amount, annual_interest_rate, stage_num):
     for _ in range(1, stage_num):
         res_expr = res_expr * (1 + IR_perM) - A
     res = solve(res_expr, A)
-    return res[0]
+    res = res[0]
+    interest_pool = []
+    principal_tool = []
+    left = loan_amount
+    PerInt = left * IR_perM
+    PerPrin = res - PerInt
+    interest_pool.append(PerInt)
+    principal_tool.append(PerPrin)
+    for _ in range(1, stage_num):
+        left = left * (1 + IR_perM) - res
+        PerInt = left * IR_perM
+        PerPrin = res - PerInt
+        interest_pool.append(PerInt)
+        principal_tool.append(PerPrin)
+    return [res, interest_pool, principal_tool]
 
 def main():
 
     args = parse_args()
 
     EPP = equal_principal_payment(loan_amount=args.loan_amount, annual_interest_rate=args.annual_interest_rate, stage_num=args.stage_num)
-    print("#" * 50)
-    print("贷款额：{} ； 年化利率：{}；还款期数：{}".format(args.loan_amount, args.annual_interest_rate, args.stage_num))
-    print("#" * 50)
-    print('等额本金贷款：')
-
+    total_inter = sum(EPP) - args.loan_amount
     each_M = args.loan_amount/args.stage_num
+
+    print("贷款额：{} ； 年化利率：{}；还款期数：{}".format(args.loan_amount, args.annual_interest_rate, args.stage_num))
+    print("\033[1;35;31m#" * 50 + "\033[0m")
+    print('等额本金贷款：')
     for i in range(0, args.stage_num):
         print('第{}期，本金：{:.2f}, 利息：{:.2f}'.format(i+1, EPP[i], (EPP[i] - each_M)))
-
-    total_inter = sum(EPP) - args.loan_amount
-
     print('#总利息{:.2f}'.format(total_inter))
+    print("\033[1;35;31m#"*50 + "\033[0m")
 
-    print("#"*50)
     ELP = equal_loan_payment(loan_amount=args.loan_amount, annual_interest_rate=args.annual_interest_rate, stage_num=args.stage_num)
     print('等额本息贷款：')
-    print('每月还款额：{:.2f}'.format(ELP))
-    print('#总利息{:.2f}'.format(ELP*args.stage_num - args.loan_amount))
-    print("#" * 50)
+    print('每月还款额：{:.2f}'.format(ELP[0]))
+    for i in range(0, args.stage_num):
+        print('第{}期，本金：{:.2f}, 利息：{:.2f}'.format(i+1, ELP[2][i], ELP[1][i]))
+
+    print('#总利息{:.2f}'.format(ELP[0]*args.stage_num - args.loan_amount))
+    print("\033[1;35;31m#" * 50 + "\033[0m")
+
 if __name__ == '__main__':
     main()
 
