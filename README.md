@@ -62,3 +62,21 @@ python MortgageCalculation.py -l 120000 -i 0.06 -s 12
 #总利息3935.66
 ##################################################
 ```
+
+## 2. clean_reads_extract.pl
+
+### 2.1 Usage
+```
+Usage: script for extracting paired sequences for MGS/MLG according to bowtie mapping results
+
+Example: perl /TJPROJ1/MICROCOOP/Micro/wangpeng/scripts/clean_reads_extract2.pl -1 sample.fq1.gz -2 sample.fq2.gz -mgs mgs.cluster -bam readsmapping.sam -outdir ./
+```
+
+### 2.2 
+```
+#building index
+bwa index total.bin.fa
+
+#extracting reads of  bins/mgs/mlg
+bwa mem -t 10 total.bin.fa sample_1.fastq.gz sample_2.fastq.gz 2> bwa.log | perl clean_reads_extract.pl -1 sample_1.fastq.gz -2 sample_2.fastq.gz -mgs bin.cluster  -bam -  --outdir ./
+```
