@@ -69,10 +69,9 @@ python MortgageCalculation.py -l 120000 -i 0.06 -s 12
 ```
 Usage: script for extracting paired sequences for MGS/MLG according to bowtie mapping results
 
-Example: perl /TJPROJ1/MICROCOOP/Micro/wangpeng/scripts/clean_reads_extract2.pl -1 sample.fq1.gz -2 sample.fq2.gz -mgs mgs.cluster -bam readsmapping.sam -outdir ./
 ```
 
-### 2.2 
+### 2.2 Examples 
 ```
 #building index
 bwa index total.bin.fa
