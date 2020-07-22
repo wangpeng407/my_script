@@ -80,3 +80,6 @@ bwa index total.bin.fa
 #extracting reads of  bins/mgs/mlg
 bwa mem -t 10 total.bin.fa sample_1.fastq.gz sample_2.fastq.gz 2> bwa.log | perl clean_reads_extract.pl -1 sample_1.fastq.gz -2 sample_2.fastq.gz -mgs bin.cluster  -bam -  --outdir ./
 ```
+
+## 3 coverage_calculate_from_genomeCoverageBed.pl
+
